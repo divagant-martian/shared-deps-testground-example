@@ -1,0 +1,22 @@
+[metadata]
+name = "demo-shared-build"
+
+[global]
+  builder = "docker:generic"
+  plan = "shared-deps-testground-example"
+  case = "{{ .Env.PLAN_CASE }}"
+  runner = "local:docker"
+
+  [global.build_config]
+    path = "{{ .Env.PLAN_NAME }}/"
+
+[[groups]]
+  id = "main-instances"
+  instances = { count = 2 }
+
+  # useful when mixing different plans and builders.
+  # in this case, we define it in global already.
+  # builder = "docker:generic"
+
+  # [groups.build_config]
+  #   path = "planA/"
